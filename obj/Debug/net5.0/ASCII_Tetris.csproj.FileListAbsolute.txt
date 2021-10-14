@@ -1,0 +1,16 @@
+C:\Users\hemul\source\repos\ASCII_Tetris\bin\Debug\net5.0\ASCII_Tetris.exe
+C:\Users\hemul\source\repos\ASCII_Tetris\bin\Debug\net5.0\ASCII_Tetris.deps.json
+C:\Users\hemul\source\repos\ASCII_Tetris\bin\Debug\net5.0\ASCII_Tetris.runtimeconfig.json
+C:\Users\hemul\source\repos\ASCII_Tetris\bin\Debug\net5.0\ASCII_Tetris.runtimeconfig.dev.json
+C:\Users\hemul\source\repos\ASCII_Tetris\bin\Debug\net5.0\ASCII_Tetris.dll
+C:\Users\hemul\source\repos\ASCII_Tetris\bin\Debug\net5.0\ref\ASCII_Tetris.dll
+C:\Users\hemul\source\repos\ASCII_Tetris\bin\Debug\net5.0\ASCII_Tetris.pdb
+C:\Users\hemul\source\repos\ASCII_Tetris\obj\Debug\net5.0\ASCII_Tetris.csproj.AssemblyReference.cache
+C:\Users\hemul\source\repos\ASCII_Tetris\obj\Debug\net5.0\ASCII_Tetris.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hemul\source\repos\ASCII_Tetris\obj\Debug\net5.0\ASCII_Tetris.AssemblyInfoInputs.cache
+C:\Users\hemul\source\repos\ASCII_Tetris\obj\Debug\net5.0\ASCII_Tetris.AssemblyInfo.cs
+C:\Users\hemul\source\repos\ASCII_Tetris\obj\Debug\net5.0\ASCII_Tetris.csproj.CoreCompileInputs.cache
+C:\Users\hemul\source\repos\ASCII_Tetris\obj\Debug\net5.0\ASCII_Tetris.dll
+C:\Users\hemul\source\repos\ASCII_Tetris\obj\Debug\net5.0\ref\ASCII_Tetris.dll
+C:\Users\hemul\source\repos\ASCII_Tetris\obj\Debug\net5.0\ASCII_Tetris.pdb
+C:\Users\hemul\source\repos\ASCII_Tetris\obj\Debug\net5.0\ASCII_Tetris.genruntimeconfig.cache
