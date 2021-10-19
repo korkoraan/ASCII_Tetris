@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Timers;
+using System.Xml;
 using Timer = System.Timers.Timer;
 
 namespace ASCII_Tetris
@@ -28,6 +30,13 @@ namespace ASCII_Tetris
         } ;
 
         private String screen = "";
+
+        private static readonly Coords WellSize;
+        static Game()
+        {
+            WellSize = new Coords(10, 15);
+        }
+        
         void CreateScreen()
         {
             screen += "-----------------\n";
@@ -72,35 +81,50 @@ namespace ASCII_Tetris
             switch (f)
             {
                 case Figures.I:
-                    result = new FigureI(new Coords(rnd.Next(9), 0));
+                    result = new FigureI(new Coords(rnd.Next(4,WellSize.X - 1), 0)); // хардкод границ генерации
                     break;
                 default:
-                    result = new FigureI(new Coords(rnd.Next(9), 0)); // большинство фигур отсутствует
+                    result = new FigureI(new Coords(rnd.Next(4,WellSize.X - 1), 0)); // большинство фигур отсутствует
                     break;
             }
 
             return result;
         }
 
-        void Update(Object source, ElapsedEventArgs e)
+        static char ascii(int value)
         {
-            if (FigureHasFallen(CurrentFigure))
+            return ((char) value);
+        }
+        
+        String[] GetWell()
+        {
+            String[] result = new String[WellSize.Y];
+
+            string tmp;
+            for (int i = 0; i < WellSize.Y - 1; ++i)
             {
-                CurrentFigure = SpawnRandomFigure();
+                tmp = "║";
+                for (int j = 0; j < WellSize.X - 2; ++j)
+                {
+                    tmp += " ";
+                }
+                tmp += "║";
+                result[i] = tmp;
             }
-            
-            foreach (var coord in CurrentFigure.Coords)
+
+            tmp = "╚";
+            for (int j = 0; j < WellSize.X - 2; ++j)
             {
-                gameField[coord.Y + coord.X] = 1;
+                tmp += "═";
             }
-            Console.WriteLine(screen);
-            
-            foreach (var coord in CurrentFigure.Coords)
-            {
-                gameField[coord.Y + coord.X] = 0;
-            }
-            CurrentFigure.Tail.Y--;
-            timer.Start();
+            tmp += "╝";
+            result[WellSize.Y - 1] = tmp;
+
+            return result;
+        } 
+        
+        void Update()
+        {
         }
 
         private Timer timer = new Timer(DefaultSpeed);
@@ -108,18 +132,58 @@ namespace ASCII_Tetris
 
         void Start()
         {
-            CreateScreen(); 
-            timer.Elapsed += Update;
-            Console.WriteLine(screen);
-            timer.Start();
             CurrentFigure = SpawnRandomFigure();
         }
 
+        void DrawFigure(IFigure figure)
+        {
+            foreach (var coord in figure.Coords)
+            {
+                Console.SetCursorPosition(coord.X, coord.Y);
+                Console.Write("#");
+                //░
+            }
+        }
+        
         static void Main(string[] args)
         {
             Game game = new Game();
             game.Start();
-            Console.ReadKey();
+
+            while(true)
+            {
+                var backgroundColor = Console.BackgroundColor;
+                var foregroundColor = Console.ForegroundColor; 
+                Console.Clear();
+                Console.BackgroundColor = ConsoleColor.Blue;
+                Console.ForegroundColor = ConsoleColor.White;
+                var well = game.GetWell();
+                foreach (var s in well)
+                {
+                    Console.WriteLine(s);
+                }
+
+                Console.BackgroundColor = ConsoleColor.Blue;
+                Console.ForegroundColor = ConsoleColor.Red;
+                game.DrawFigure(game.CurrentFigure);
+
+                var action = Console.ReadKey();
+                switch (action.Key)
+                {
+                    case ConsoleKey.LeftArrow :
+                        game.CurrentFigure.Move(Direction.Left);
+                        break;
+                    case ConsoleKey.RightArrow :
+                        game.CurrentFigure.Move(Direction.Right);
+                        break;
+                    default:
+                        game.CurrentFigure.Move(Direction.Down);
+                        break;
+                    
+                }
+                Console.BackgroundColor = backgroundColor;
+                Console.ForegroundColor = foregroundColor; 
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Dynamic;
+﻿using System.ComponentModel;
+using System.Data;
+using System.Dynamic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -20,18 +22,47 @@ namespace ASCII_Tetris
             Y = y;
         }
     }
-    
+
+    public enum Direction
+    {
+        Down, Left, Right
+    }
     interface IFigure
     {
         void Turn();
-        int State { get; set; }
+        void Move(Direction dir)
+        {
+            switch (dir)
+            {
+                case Direction.Down:
+                    foreach (var coord in Coords)
+                    {
+                        coord.Y += 1;
+                    }
+                    break;
+                case Direction.Left:
+                    foreach (var coord in Coords)
+                    {
+                        coord.X -= 1;
+                    }
+                    break;
+                case Direction.Right:
+                    foreach (var coord in Coords)
+                    {
+                        coord.X += 1;
+                    }
+                    break;
+                
+            }
+        }
         Coords[] Coords { get; set; }
-        Coords Tail { get; set; }
+        Coords[] Borders { get; set; }
     }
 
     public class FigureI : IFigure
     {
         public Coords[] Coords { get; set; } = new Coords[4];
+        public Coords[] Borders { get; set; } = new Coords[4];
         
         public Coords Tail { get; set; }
 
@@ -39,17 +70,13 @@ namespace ASCII_Tetris
         {
             Tail = coord;
             Coords[0] = Tail;
-            if (coord.X > 5)
-            {
-                Coords[1] = new Coords(Tail.X - 1, 0);
-                Coords[2] = new Coords(Tail.X - 2, 0);
-                Coords[3] = new Coords(Tail.X - 3, 0);
-            } 
+            Coords[1] = new Coords(Tail.X - 1, 0);
+            Coords[2] = new Coords(Tail.X - 2, 0);
+            Coords[3] = new Coords(Tail.X - 3, 0);
         }
         
         public void Turn()
         {
         }
-        public int State { get; set; }
     }
 }
